@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Simple Brightcove
- * Plugin URI: http://misterben.me/todo
+ * Plugin URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * Description: Allows the easy inclusion of a Brightcove player
  * Version: 0.1
- * Author: Me
- * Author URI: http://URI_Of_The_Plugin_Author
+ * Author: Ben Clifford
+ * Author URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * License:GPL2
  * Usage: [bc]http://bcove.me/bbnvrhso[/bc]
  * 
