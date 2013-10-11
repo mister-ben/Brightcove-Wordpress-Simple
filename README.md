@@ -30,4 +30,6 @@ This just uses the Brightcove player object found in the HTML at the URL given. 
 
 This might not trap every error situation.
 
-It doesn't do anything fancy like listing the videos in your account. Maybe that will come later
+It doesn't do anything fancy like listing the videos in your account. Maybe that will come later.
+
+Report bugs [here](https://github.com/Brightcodes/Brightcove-Wordpress/issues).
