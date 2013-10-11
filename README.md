@@ -1,9 +1,9 @@
 Brightcove-Wordpress
 ====================
-`brightcove-wordpress-simple.php` is intended as a simple way to add a player to Wordpress.
+This is intended as a simple way to add a player to Wordpress. You just need to get the URL for the video from the Video Cloud studio.
 
 # Installation
-* In Worpress Admin, go to **Plugins > Add New** then click on the link to upload a plugin from a zip file.  
+* In Wordpress Admin, go to **Plugins > Add New** then click on the link to upload a plugin from a zip file.  
 * Upload the zip file
 * Activate the plugin
 
@@ -15,7 +15,7 @@ First get a link to the video and player you want to use from the Video Cloud me
 * Under **Copy publishing code**, select **URL**
 * Copy the URL 
 
-In Worpress's post editor, add the the URL surrounded by `[bc]` and `[/bc]`, for example:
+In Wordpress's post editor, add the the URL surrounded by `[bc]` and `[/bc]`, for example:
 
     [bc]http://bcove.me/f8b43rfg[/bc]
 
