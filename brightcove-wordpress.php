@@ -9,8 +9,10 @@
  * License:GPL2
  * Usage: [bc]http://bcove.me/bbnvrhso[/bc]
  * 
- * This is a simple way to publish a player by using a link to a player
- * This hasn't been extensively tested, but does work with the bcove.me player/video links
+ * This is a simple way to publish a player by using a link to a player.
+ * This hasn't been extensively tested, but does work with the bcove.me links from the media module.
+ * There may be ways you can break this.
+ * 
  */
 class BC_Shortcode {
 	static $add_script;
@@ -42,7 +44,9 @@ class BC_Shortcode {
 		
 		// If nothing matches, abort
 		if ($objects->length == 0) {
-			return;
+			$errorMessage = $dom->createElement('p');
+			$errorMessage->appendChild($dom->createTextNode('There is no player at ' . $content . '.'));
+			return $dom->saveHTML($errorMessage);
 		}
 		
 		$object = $objects->item(0);
