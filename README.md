@@ -4,7 +4,7 @@ This is intended as a simple way to add a player to Wordpress. You just need to 
 
 # Installation
 * In Wordpress Admin, go to **Plugins > Add New** then click on the link to upload a plugin from a zip file.  
-* Upload the zip file
+* Upload the zip file from the dist folder
 * Activate the plugin
 
 # Usage
