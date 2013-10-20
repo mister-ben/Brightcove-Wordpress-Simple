@@ -23,9 +23,13 @@ It doesn't have to be a bcove.me URL.) You can also use the URL of any page that
 
     [bc]http://www.brightcove.com[/bc]
     
-You can override the player width and/or height like this:
+The player publishing code found at the URL is used as-is. You can override the player width and/or height like this:
 
     [bc width="240" height="135"]http://bcove.me/f8b43rfg[/bc]
+
+Or override autostart like this:
+
+    [bc autoStart="false"]http://bcove.me/f8b43rfg[/bc]
 
 # Notes
 This will use the HTTP or HTTPS version of the publsihing code as appropriate.
@@ -37,7 +41,8 @@ It doesn't do anything fancy like listing the videos in your account. Maybe that
 Report bugs [here](https://github.com/Brightcodes/Brightcove-Wordpress/issues).
 
 # Changes
-
+## 0.3
+* Added option to override autostart
 ## 0.2
 * Added URL validation
-* Added ability to overridge height/width
+* Added ability to override height/width

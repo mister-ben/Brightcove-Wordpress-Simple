@@ -3,7 +3,7 @@
  * Plugin Name: Simple Brightcove
  * Plugin URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * Description: Allows the easy inclusion of a Brightcove player
- * Version: 0.2
+ * Version: 0.3
  * Author: Ben Clifford
  * Author URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * License:GPL2
@@ -18,20 +18,12 @@
  */
 class BC_Shortcode {
 	static $add_script;
+	static $dom;
 
 	static function init() {
 		add_shortcode('bc', array(__CLASS__, 'handle_shortcode'));
-
 		add_action('init', array(__CLASS__, 'register_script'));
 		add_action('wp_footer', array(__CLASS__, 'print_script'));
-	}
-
-	function newParam($name, $value) {
-		$doc = new DOMDocument;
-		$newParam = $doc->createElement('param');
-		$newParam->setAttribute("name",$name);
-		$newParam->setAttribute("value",$value);
-		return $newParam;
 	}
 
 	static function set_player_param($object, $name, $value) {
@@ -44,8 +36,7 @@ class BC_Shortcode {
 			}
 		}
 		if (!$updated) {
-			$doc = new DOMDocument;
-			$newParam = $doc->createElement('param');
+			$newParam = self::$dom->createElement('param');
 			$newParam->setAttribute("name",$name);
 			$newParam->setAttribute("value",$value);
 			$object->appendChild($newParam);
@@ -54,8 +45,9 @@ class BC_Shortcode {
 
 	static function handle_shortcode($atts, $content = null) {
 		extract(shortcode_atts(array(
-      			'height' => null,
-			'width' => null
+      		'height' => null,
+			'width' => null,
+			'autostart' => null
    		), $atts));
 
 		// Check if a valid URL
@@ -67,9 +59,9 @@ class BC_Shortcode {
 		// TODO: This could cache to the local db
 		$html = file_get_contents($content);
 		libxml_use_internal_errors(true);
-		$dom = new DOMDocument;
-		$dom->loadHTML($html);
-		$xpath =new DOMXPath($dom);
+		self::$dom = new DOMDocument;
+		self::$dom->loadHTML($html);
+		$xpath =new DOMXPath(self::$dom);
 		$query = '//object[@class="BrightcoveExperience"]';
 		$objects = $xpath->query($query);
 		
@@ -87,7 +79,7 @@ class BC_Shortcode {
 		$metas = $xpath->query($query);
 		if($metas->length > 0) {
 			parse_str(parse_url($metas->item(0)->getAttribute("content"), PHP_URL_QUERY),$args);
-			$object->appendChild(self::newParam($dom, '@videoPlayer',$args['bctid']));
+			self::set_player_param($object,'@videoPlayer',$args['bctid']);
 		}
 
 		// Override width and height if given
@@ -97,6 +89,11 @@ class BC_Shortcode {
 
 		if (!empty($height)) {
 			self::set_player_param($object,'height',$height);
+		}
+
+		// Wordpress lowercases the attribute names
+		if (!empty($autostart)) {
+			self::set_player_param($object,'autoStart',$autostart);
 		}
 
 		if (is_ssl()) {
@@ -109,7 +106,7 @@ class BC_Shortcode {
 
 		// Make sure the script gets written, and return HTML
 		self::$add_script = true;
-		return $dom->saveHTML($object);
+		return self::$dom->saveHTML($object);
 	}
 
 	static function register_script() {
