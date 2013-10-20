@@ -3,12 +3,14 @@
  * Plugin Name: Simple Brightcove
  * Plugin URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * Description: Allows the easy inclusion of a Brightcove player
- * Version: 0.1
+ * Version: 0.2
  * Author: Ben Clifford
  * Author URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * License:GPL2
  * Usage: [bc]http://bcove.me/bbnvrhso[/bc]
- * 
+ * 			[bc width="480" height="270"]http://bcove.me/bbnvrhso[/bc]
+ *
+ *
  * This is a simple way to publish a player by using a link to a player.
  * This hasn't been extensively tested, but does work with the bcove.me links from the media module.
  * There may be ways you can break this.
@@ -24,14 +26,43 @@ class BC_Shortcode {
 		add_action('wp_footer', array(__CLASS__, 'print_script'));
 	}
 
-	static function newParam($dom, $name, $value) {
-		$newParam = $dom->createElement('param');
+	function newParam($name, $value) {
+		$doc = new DOMDocument;
+		$newParam = $doc->createElement('param');
 		$newParam->setAttribute("name",$name);
 		$newParam->setAttribute("value",$value);
 		return $newParam;
 	}
 
+	static function set_player_param($object, $name, $value) {
+		$updated = false;
+		$params = $object->getElementsByTagName('param');
+		foreach ($params as $child) {
+			if ($child->getAttribute('name') == $name )  {
+				$child->setAttribute('value',$value);
+				$updated = true;
+			}
+		}
+		if (!$updated) {
+			$doc = new DOMDocument;
+			$newParam = $doc->createElement('param');
+			$newParam->setAttribute("name",$name);
+			$newParam->setAttribute("value",$value);
+			$object->appendChild($newParam);
+		}
+	}
+
 	static function handle_shortcode($atts, $content = null) {
+		extract(shortcode_atts(array(
+      			'height' => null,
+			'width' => null
+   		), $atts));
+
+		// Check if a valid URL
+   		if(!filter_var($content, FILTER_VALIDATE_URL) || substr($content, 0, 4) != 'http'){ 
+   			return '<p>"' . $content . '" is not a URL.</p>';
+   		}
+
 		// Retrieve the URL and find the first object with class BrightcoveExperience
 		// TODO: This could cache to the local db
 		$html = file_get_contents($content);
@@ -44,13 +75,11 @@ class BC_Shortcode {
 		
 		// If nothing matches, abort
 		if ($objects->length == 0) {
-			$errorMessage = $dom->createElement('p');
-			$errorMessage->appendChild($dom->createTextNode('There is no player at ' . $content . '.'));
-			return $dom->saveHTML($errorMessage);
+			return '<p>There is no player at <a href="' . $content . '">' . $content . '</a>.</p>';
 		}
 		
 		$object = $objects->item(0);
-		
+
 		// Grab the twitter card URL to find the video id
 		// TODO: Check if this is needed i.e. if there is already an @videoPlayer param
 		//       And if needed and there is no video id to be found, show and error
@@ -60,10 +89,24 @@ class BC_Shortcode {
 			parse_str(parse_url($metas->item(0)->getAttribute("content"), PHP_URL_QUERY),$args);
 			$object->appendChild(self::newParam($dom, '@videoPlayer',$args['bctid']));
 		}
-		if (is_ssl()) {
-			$object->appendChild(self::newParam($dom, 'secureConnections','true'));
-			$object->appendChild(self::newParam($dom, 'secureHTMLConnections','true'));
+
+		// Override width and height if given
+		if (!empty($width)) {
+			self::set_player_param($object,'width',$width);
 		}
+
+		if (!empty($height)) {
+			self::set_player_param($object,'height',$height);
+		}
+
+		if (is_ssl()) {
+			self::set_player_param($object,'secureConnections','true');
+			self::set_player_param($object,'secureHTMLConnections','true');
+		}
+
+		// Add wmode=transparent (on IE, not using this means a flash object goes on top of everything / obstructs some navigation)
+		self::set_player_param($object,'wmode','transparent');
+
 		// Make sure the script gets written, and return HTML
 		self::$add_script = true;
 		return $dom->saveHTML($object);
