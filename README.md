@@ -1,4 +1,4 @@
-Simple Wordpress Plugin for Wordpress
+Simple Brightcove Plugin for Wordpress
 =====================================
 This is intended as a simple way to add a player to Wordpress. You just need to get the URL for the video from the Video Cloud studio.
 
