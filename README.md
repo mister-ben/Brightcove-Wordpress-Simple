@@ -47,13 +47,10 @@ Report bugs [here](https://github.com/Brightcodes/Brightcove-Wordpress/issues).
 
 # Changes
 
-<<<<<<< HEAD
 ## 0.4
 
 * Submitted to Wordpress Plugin Directory, so dist folder removed
 
-=======
->>>>>>> babfa47be9ffb4a0069b297cef1ddac5c1d4c936
 ## 0.3
 
 * Added option to override autostart
