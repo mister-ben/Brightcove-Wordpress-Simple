@@ -1,11 +1,16 @@
-Simple Wordpress Plugin for Wordpress
+Simple Brightcove Plugin for Wordpress
 =====================================
 This is intended as a simple way to add a player to Wordpress. You just need to get the URL for the video from the Video Cloud studio.
 
 # Installation
-* In Wordpress Admin, go to **Plugins > Add New** then click on the link to upload a plugin from a zip file.  
-* Upload the zip file from the dist folder
-* Activate the plugin
+
+Use Wordpress's plugin directory.
+
+* In Wordpress admin, install a new plugin.
+* Search for "Simple Brightcove Player Embed"
+* Install and activate
+
+Direct link: http://wordpress.org/plugins/simple-brightcove-player-embed/
 
 # Usage
 First get a link to the video and player you want to use from the Video Cloud media module.
@@ -41,8 +46,16 @@ It doesn't do anything fancy like listing the videos in your account. Maybe that
 Report bugs [here](https://github.com/Brightcodes/Brightcove-Wordpress/issues).
 
 # Changes
+
+## 0.4
+
+* Submitted to Wordpress Plugin Directory, so dist folder removed
+
 ## 0.3
+
 * Added option to override autostart
+
 ## 0.2
+
 * Added URL validation
 * Added ability to override height/width

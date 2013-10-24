@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Simple Brightcove
+ * Plugin Name: Simple Brightcove Player Embed
  * Plugin URI: https://github.com/Brightcodes/Brightcove-Wordpress
- * Description: Allows the easy inclusion of a Brightcove player
- * Version: 0.3
- * Author: Ben Clifford
+ * Description: This allows a Brighcove Video Cloud player to be easily embedded by its player URL. It does not need a Video Cloud Media API key, so works with any Brightcove account edition.
+ * Version: 0.4
+ * Author: mister-ben
  * Author URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * License:GPL2
  * Usage: [bc]http://bcove.me/bbnvrhso[/bc]
