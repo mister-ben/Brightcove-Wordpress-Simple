@@ -3,7 +3,7 @@
  * Plugin Name: Simple Brightcove Player Embed
  * Plugin URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * Description: This allows a Brighcove Video Cloud player to be easily embedded by its player URL. It does not need a Video Cloud Media API key, so works with any Brightcove account edition.
- * Version: 0.4
+ * Version: 0.5
  * Author: mister-ben
  * Author URI: https://github.com/Brightcodes/Brightcove-Wordpress
  * License:GPL2
@@ -104,9 +104,17 @@ class BC_Shortcode {
 		// Add wmode=transparent (on IE, not using this means a flash object goes on top of everything / obstructs some navigation)
 		self::set_player_param($object,'wmode','transparent');
 
+		// Create random element ID
+		$expid = "brightcove" . rand(0 , 10000 );
+		$object->setAttribute("id",$expid);
+
+		// IE8 fix
+		$ie8Style = '<style type="text/css">#_container' . $expid . '{display:block !important;}</style>';
+		
+
 		// Make sure the script gets written, and return HTML
 		self::$add_script = true;
-		return self::$dom->saveHTML($object);
+		return self::$dom->saveHTML($object) . $ie8Style;
 	}
 
 	static function register_script() {
