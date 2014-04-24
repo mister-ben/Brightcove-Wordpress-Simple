@@ -72,7 +72,7 @@ class BC_Shortcode {
     $videoId = null;
     foreach ($http_response_header as $header) {
       if (substr($header, 0, 10) == 'Location: ') {
-        $location = split(': ', $header);
+        $location = explode(': ', $header);
         parse_str(parse_url($location[1], PHP_URL_QUERY),$args);
         if (isset($args['bctid'])) {
           $videoId = $args['bctid'];
