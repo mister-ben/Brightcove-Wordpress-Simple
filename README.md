@@ -1,18 +1,19 @@
-Simple Brightcove Plugin for Wordpress
-=====================================
-This is intended as a simple way to add a player to Wordpress. You just need to get the URL for the video from the Video Cloud studio.
+=== Plugin Name ===
+Contributors: mister-ben
+Tags: brightcove, video, embed, player
+Requires at least: 3.0.1
+Tested up to: 3.9
+Stable tag: trunk
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-# Installation
+Allows a Brightcove Video Cloud player to be easily embedded into a post by its player URL.
 
-Use Wordpress's plugin directory.
+== Description ==
 
-* In Wordpress admin, install a new plugin.
-* Search for "Simple Brightcove Player Embed"
-* Install and activate
+This allows a Brighcove Video Cloud video to be easily embedded by its player URL. It does not need a Video Cloud Media API key, so works with any Brightcove account edition.
 
-Direct link: http://wordpress.org/plugins/simple-brightcove-player-embed/
 
-# Usage
 First get a link to the video and player you want to use from the Video Cloud media module.
 
 * Select a video
@@ -20,11 +21,11 @@ First get a link to the video and player you want to use from the Video Cloud me
 * Under **Copy publishing code**, select **URL**
 * Copy the URL 
 
-In Wordpress's post editor, add the the URL surrounded by `[bc]` and `[/bc]`, for example:
+In the post editor, add the the URL surrounded by `[bc]` and `[/bc]`, for example:
 
     [bc]http://bcove.me/f8b43rfg[/bc]
 
-It doesn't have to be a bcove.me URL.) You can also use the URL of any page that has a Video Cloud player in its HTML, e.g.
+It doesn't have to be a bcove.me URL. You can also use a link.brightcove.com URL or the URL of any page that has a Video Cloud player in its HTML, e.g.
 
     [bc]http://www.brightcove.com[/bc]
     
@@ -36,26 +37,46 @@ Or override autostart like this:
 
     [bc autoStart="false"]http://bcove.me/f8b43rfg[/bc]
 
-# Notes
-This will use the HTTP or HTTPS version of the publsihing code as appropriate.
+== Installation ==
 
-This might not trap every error situation.
+1. Either use the automatic installation within wordpress, or upload `brightcove-wordpress-simple.php` to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
 
-It doesn't do anything fancy like listing the videos in your account. Maybe that will come later.
+== Frequently Asked Questions ==
 
-Report bugs [here](https://github.com/Brightcodes/Brightcove-Wordpress/issues).
+= Does this work with HTTPS? =
 
-# Changes
+Yes, HTTP or HTTPS versions of Brightcove's publishing code are used appropriately and automatically. 
 
-## 0.4
+= What can I use as a player URL? =
 
-* Submitted to Wordpress Plugin Directory, so dist folder removed
+Either the player URL from the studio, or any other URL that has a Video Cloud player publishing page in its HTML.
 
-## 0.3
+= I used a URL with a player, but it doesn't work =
 
-* Added option to override autostart
+If the HTML at the URL does not have a standard Video Cloud player publishing code in its HTML, this won't work. That might be because the player at that URL uses a Flash-only embed, an iframe, or is created dynamically at runtime.
 
-## 0.2
+== Screenshots ==
 
-* Added URL validation
-* Added ability to override height/width
+1. Player in post
+2. Post editor
+
+== Changelog ==
+
+= 0.8 =
+Using DOMDocument::saveXML instead of DOMDocument::saveHTML for PHP < 3.6 compatibility
+
+= 0.7 =
+Fixed deprecation notice
+
+= 0.6 =
+Tweaked IE8 fix and some additional fixes to video ID detection
+
+= 0.5 =
+Fix for IE8
+
+= 0.4 =
+First release
+
+== Upgrade Notice ==
+Fix for Internet Explorer 8
