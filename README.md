@@ -80,3 +80,4 @@ First release
 
 == Upgrade Notice ==
 Fix for Internet Explorer 8
+
